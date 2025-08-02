@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy 4th Month 💌</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <canvas id="sparkleCanvas"></canvas>
+  
+  <div class="container" id="welcome">
+    <h1 class="fade-in">Happy 4 Months 💌</h1>
+    <p class="fade-in delay">Are you ready to unlock your surprise?</p>
+    <button onclick="startQuiz()" class="fade-in delay-2">Begin</button>
+  </div>
+
+  <div class="container hidden" id="quiz">
+    <h2>Answer these 💭</h2>
+    <p>Get them right to unlock my letter 🥺</p>
+    <input type="text" id="q1" placeholder="1. What's the first nickname I ever gave you?"/>
+    <input type="text" id="q2" placeholder="2. Who was the first to know about our relationship?"/>
+    <input type="text" id="q3" placeholder="3. Who said 'I love you' first?"/>
+    <input type="text" id="q4" placeholder="4. When was the very first time we talked in the server?"/>
+    <button onclick="checkAnswers()">Submit Answers</button>
+
+    <div id="love-meter">
+      <p>Love Meter 💖</p>
+      <div class="meter-bar">
+        <div class="meter-fill" id="meter-fill"></div>
+      </div>
+    </div>
+    <p id="result"></p>
+  </div>
+
+  <div class="container hidden" id="letter">
+    <h2>My Letter To You 💌</h2>
+    <p class="letter">
+      My dearest love,<br><br>
+     Happy 4 months with you, my darling.
+
+I still find myself in awe every single day — that someone as wonderful as you exists… 
+and that I get to call you mine.
+
+You are patient, persevering, gentle, understanding, endlessly loving, caring, talented, intelligent, adorable — everything 
+I could’ve ever dreamed of in a partner. But beyond all those traits, it’s your heart that captivates me most. The way you love — deeply, 
+wholeheartedly, and without holding back — it moves me.
+
+There have been times I gave you a hard time. Moments when I was clouded with emotions, unsure of how to love rightly. And yet, 
+even then, you stayed. You understood me when I didn’t even understand myself. You gave me grace when I couldn’t ask for it. That is something I will never 
+forget — the way you choose me again and again, especially when it isn’t easy.
+
+Your love doesn’t come with conditions. It comes with arms wide open, with softness in every word you speak, and 
+warmth in every message you send. You wrap me in comfort, even from miles away.
+
+I feel so unbelievably cherished when I’m with you.
+
+You make me feel like the most loved woman in the world.
+
+Your presence — even in the form of a simple “wyd” — never fails to brighten up my day. The way you call me your baby, 
+the way you giggle and laugh with me, the way you make space for me in your everyday life — it means the world. I carry those little moments with me like treasures, 
+and they’ve become part of the joy I live in now.
+
+I admire you deeply. Your honesty, your openness, the way you pour out your heart so freely to me — it's rare and beautiful. You’ve shown me a kind of love that doesn’t 
+run when things get hard. Instead, you stay. You work through the mess. You hold my hand through the storm. 
+And you do it all while reminding me how much I’m loved.
+
+Sure, we’ve had our ups and downs. But those moments aren’t marks of weakness — they’re signs that we’re real, that we’re growing, that we’re building something rooted and strong. 
+And I know, without a doubt, that we’re becoming better together.
+
+I want to grow with you — in love, in faith, in life. I want to keep learning how to love you better every day, to become the kind of partner you deserve. 
+Because you, my love, deserve nothing less than the very best of me.
+
+Thank you for loving me. Thank you for choosing me.
+
+I can’t wait to spend not just more months, but many years — a lifetime — with you.
+
+You make me feel like the luckiest woman alive.
+
+I love you, endlessly.
+
+Forever yours,
+      Love always,<br>
+      Cai
+    </p>
+  </div>
+
+  <script>
+    function startQuiz() {
+      document.getElementById('welcome').classList.add('hidden');
+      document.getElementById('quiz').classList.remove('hidden');
+    }
+
+    function checkAnswers() {
+      const a1 = document.getElementById('q1').value.trim().toLowerCase();
+      const a2 = document.getElementById('q2').value.trim().toLowerCase();
+      const a3 = document.getElementById('q3').value.trim().toLowerCase();
+      const a4 = document.getElementById('q4').value.trim().toLowerCase();
+
+      let score = 0;
+      if (a1 === 'baba') score++;
+      if (a2 === 'riri') score++;
+      if (a3 === 'me') score++;
+      if (a4 === 'april 6') score++;
+
+      const result = document.getElementById('result');
+      const meter = document.getElementById('meter-fill');
+      const percent = (score / 4) * 100;
+      meter.style.width = percent + '%';
+
+      if (score === 4) {
+        document.getElementById('quiz').classList.add('hidden');
+        document.getElementById('letter').classList.remove('hidden');
+      } else {
+        result.textContent = `Almost there... you got ${score}/4 right 💭`;
+      }
+    }
+
+    // Sparkle animation
+    const canvas = document.getElementById("sparkleCanvas");
+    const ctx = canvas.getContext("2d");
+    let sparkles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function createSparkle() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 1,
+        alpha: Math.random(),
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5
+      };
+    }
+
+    function drawSparkles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      sparkles.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+        ctx.fill();
+        s.x += s.dx;
+        s.y += s.dy;
+        s.alpha -= 0.005;
+      });
+      sparkles = sparkles.filter(s => s.alpha > 0);
+      while (sparkles.length < 100) {
+        sparkles.push(createSparkle());
+      }
+      requestAnimationFrame(drawSparkles);
+    }
+
+    drawSparkles();
+  </script>
+</body>
+</html>
